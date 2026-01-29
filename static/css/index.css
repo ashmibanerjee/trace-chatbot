@@ -206,3 +206,58 @@ body {
         border-radius: 10px;
     }
 }
+
+/* Floating GitHub FAB - prominent but tasteful */
+.github-fab {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #111;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 999px; /* pill */
+    box-shadow: 0 8px 30px rgba(17,17,17,0.18);
+    text-decoration: none;
+    z-index: 9999;
+    transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    opacity: 0.98;
+    font-weight: 600;
+}
+.github-fab .fab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff;
+    color: #111;
+    font-size: 14px;
+}
+.github-fab .fab-text {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    color: #fff;
+}
+.github-fab:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(17,17,17,0.22);
+}
+.github-fab:focus {
+    outline: 3px solid rgba(255,255,255,0.12);
+    outline-offset: 4px;
+}
+
+/* Hide on very small screens to avoid covering core content */
+@media (max-width: 420px) {
+    .github-fab { display: none; }
+}
+
+/* Ensure footer contents are still reachable (don't obscure sticky footers) */
+@media (max-height: 700px) {
+    .github-fab { bottom: 18px; }
+}
