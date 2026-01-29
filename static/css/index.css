@@ -32,7 +32,7 @@ body {
 }
 
 .publication-banner {
-  max-height: parent;
+  max-height: 100%;
 
 }
 
@@ -41,7 +41,7 @@ body {
   left: auto;
   top: auto;
   transform: none;
-  object-fit: fit;
+  object-fit: contain;
 }
 
 .publication-header .hero-body {
@@ -154,4 +154,55 @@ body {
 }
 #interpolation-image-wrapper img {
   border-radius: 5px;
+}
+.demo-card {
+    width: 100%;
+    max-width: 100%; /* fill the enclosing container (is-max-desktop) */
+    margin: 40px 0; /* vertical spacing; horizontal controlled by container */
+    background: #ffffff;
+    padding: 12px 0; /* remove horizontal padding so video edges align with container/text */
+    border-radius: 20px; /* Soft rounded corners */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* Soft, professional shadow */
+    border: 1px solid #f0f0f0; /* Subtle border */
+    text-align: center;
+    box-sizing: border-box; /* ensure padding is included in width */
+}
+
+/* Make the video take up most of the card width and keep a taller 4:3 aspect ratio */
+.demo-card .video-container {
+    width: 100%;
+    /* Use modern aspect-ratio when available */
+    aspect-ratio: 4 / 3;
+    /* Fallback for browsers without aspect-ratio */
+    position: relative;
+    height: auto;
+    overflow: hidden;
+    background: #000; /* black background for letterboxing */
+    border-radius: 12px;
+}
+
+/* Ensure iframe fills the video container */
+.demo-card .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.demo-card .demo-info {
+    margin-top: 14px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .demo-card {
+        padding: 10px 0;
+        margin: 24px 0;
+    }
+    .demo-card .video-container {
+        aspect-ratio: 4 / 3;
+        border-radius: 10px;
+    }
 }
