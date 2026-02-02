@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta content="generate travel recommendations using LLMs"
@@ -20,12 +20,16 @@
           rel="stylesheet">
     <link href="./static/css/index.css" rel="stylesheet">
     <link href="./static/css/grid.css" rel="stylesheet">
+    <!-- Prompts CSS -->
+    <link href="./static/css/prompts.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bibtex-js/0.3.0/bibtex.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="./static/js/fontawesome.all.min.js"></script>
     <script src="./static/js/bulma-carousel.min.js"></script>
     <script src="./static/js/bulma-slider.min.js"></script>
     <script src="./static/js/index.js"></script>
+    <!-- Prompts JS -->
+    <script src="./static/js/prompts.js"></script>
 </head>
 <body>
 
@@ -113,6 +117,7 @@
 </div>
 </div>
 </div>
+</div>
 </section>
 
 
@@ -170,6 +175,21 @@
                 </figcaption>
             </figure>
             <br><br>
+
+<!-- Prompts section: dynamically load prompt files from static/prompts -->
+<section id="prompts" class="prompts-section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Prompts</h2>
+    <p class="has-text-centered"
+       style="max-width:56rem;margin:0 auto 1rem auto;color:#374151;">The prompt templates used
+        by the TRACE agents. Click "View" to expand a full prompt and use "Copy" to copy the
+        template to the clipboard. You can also find them <a href="https://github.com/ashmibanerjee/trace-crs-chatbot/tree/main/backend/prompts">on GitHub</a>.</p>
+    <div class="prompts-grid" id="prompts-grid">
+      <!-- Cards will be inserted here by static/js/prompts.js -->
+    </div>
+  </div>
+</section>
+
             <div class="row">
                 <h2 class="title is-3 has-text-centered">Acknowledgments</h2>
             </div>
@@ -181,8 +201,6 @@
         </div>
     </div>
 </section>
-
-
 
 <footer class="footer">
     <div class="container">
@@ -208,3 +226,5 @@
 
 </body>
 </html>
+
+
