@@ -1,0 +1,132 @@
+/* Prompts gallery styles - complementary to Bulma */
+.prompts-section {
+  padding: 2.5rem 1.5rem;
+  background: linear-gradient(180deg, rgba(250,250,252,1) 0%, rgba(245,247,250,1) 100%);
+  border-top: 1px solid rgba(0,0,0,0.04);
+}
+.prompts-section .section-title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.prompts-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Make rows equal height so cards align */
+  grid-auto-rows: 1fr;
+  align-items: start;
+}
+
+/* When any card is expanded, allow rows to size naturally so the expanded card doesn't force all cards to stretch */
+.prompts-grid.has-expanded {
+  grid-auto-rows: auto;
+}
+.prompt-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15,23,42,0.03);
+  display: flex;
+  flex-direction: column;
+  /* ensure cards stretch to fill grid row */
+  height: 100%;
+  min-height: 160px;
+}
+.prompt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.prompt-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0f172a;
+}
+.prompt-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+.prompt-preview {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.85rem;
+  color: #111827;
+  background: linear-gradient(90deg, rgba(250,250,250,1), rgba(245,247,250,1));
+  padding: 0.6rem;
+  border-radius: 8px;
+  /* Make preview scrollable when content exceeds the preview box */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 4.5rem; /* collapsed preview height */
+}
+.prompt-preview.collapsed {
+  display: none;
+}
+.prompt-actions {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+.button.copy-btn {
+  background-color: #0b74de;
+  color: white;
+  border: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.button.toggle-btn {
+  background: transparent;
+  color: #0f172a;
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.prompt-code-wrapper {
+  /* push the wrapper to the bottom of the card so actions align */
+  margin-top: auto;
+  transition: max-height 220ms ease, opacity 200ms ease;
+  overflow: hidden;
+  max-height: 0; /* collapsed */
+  opacity: 0;
+  padding-top: 0.25rem;
+}
+.prompt-code-wrapper.expanded {
+  max-height: 60rem; /* large enough to show all content when expanded */
+  opacity: 1;
+}
+.prompt-code {
+  background: #0b1220;
+  color: #e6eef8;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  overflow: auto;
+  white-space: pre-wrap;
+  /* Prevent extremely long prompts from stretching the page; allow internal scrolling */
+  max-height: 50vh;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25);
+}
+.prompt-code:focus {
+  outline: 3px solid rgba(11,116,222,0.17);
+  outline-offset: 3px;
+}
+/* small helper for copy confirmation */
+.prompts-status {
+  margin-top: 0.6rem;
+  color: #065f46;
+  font-size: 0.95rem;
+  min-height: 1.1rem;
+}
+@media (max-width: 640px) {
+  .prompt-preview { max-height: 6.5rem; }
+  .prompts-section { padding: 1.5rem 0.8rem; }
+}
