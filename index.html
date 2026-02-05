@@ -35,89 +35,44 @@
 
 
 <section class="hero">
-    <div class="reduce-space">
-        <div class="hero-body">
-            <div class="container is-max-desktop">
-                <div class="columns is-centered">
-                    <div class="column has-text-centered">
-                        <h1 class="title is-2 publication-title"><span
-                                class='main-title'>TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</span></h1>
-                        <div class="is-size-5 publication-authors">
-                    <span class="author-block">
-                        <a href="https://ashmibanerjee.com">Ashmi
-                          Banerjee</a><sup>1
-                    </sup>,
-                    </span>
-                            <span class="author-block">
-                      <a
-                              href="https://www.linkedin.com/in/adithi-satish/">Adithi Satish</a><sup>1</sup>,
-                    </span>
-                            <span class="author-block">
-                        <a href="https://www.ce.cit.tum.de/cm/research-group/wolfgang-woerndl">Wolfgang
-                          Wörndl</a><sup>1</sup>, and
-                    </span>
-                            <span class="author-block">
-                        <a href="https://yasdel.github.io/">Yashar
-                          Deldjoo</a><sup>2</sup>
-                    </span>
-                        </div>
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-2 publication-title">
+        <span class="main-title">TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</span>
+      </h1>
 
-                        <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1*</sup>Technical
-                University of Munich, Germany</span>
-                            <span class="author-block"><sup>2</sup>Polytechnic University
-                of Bari, Italy</span>
-                        </div>
+      <div class="is-size-5 publication-authors" style="margin-top:0.5rem;">
+        <span class="author-block"><a href="https://ashmibanerjee.com">Ashmi Banerjee</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://www.linkedin.com/in/adithi-satish/">Adithi Satish</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://www.ce.cit.tum.de/cm/research-group/wolfgang-woerndl">Wolfgang Wörndl</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://yasdel.github.io/">Yashar Deldjoo</a><sup>2</sup></span>
+      </div>
 
-                        <div class="column has-text-centered">
-                            <div class="publication-links">
-                                <!-- PDF Link. -->
-                                <span class="link-block">
-                          <a class="external-link button is-normal is-rounded is-dark"
-                             href="">
-                          <span class="icon">
-                              <i class="fas fa-file-pdf"></i>
-                          </span>
-                          <span>Paper</span>
-                          </a>
-                      </span>
-                                <span class="link-block">
-                          <a class="external-link button is-normal is-rounded is-dark"
-                             href="">
-                          <span class="icon">
-                              <i class="ai ai-arxiv"></i>
-                          </span>
-                          <span>arXiv</span>
-                          </a>
-                      </span>
-                                <!-- Demo Link. -->
-                    <span class="link-block">
-                        <a class="external-link button is-normal is-rounded is-dark"
-                           href="https://adk-agent-service-778145853986.europe-west1.run.app/chat/">
-                        <span class="icon">
-                          <i class="fa-brands fa-youtube"></i>
-                        </span>
-                        <span>Demo</span>
-                        </a>
-                </span>
-                                <!-- Code Link. -->
-                <span class="link-block">
-                            <a class="external-link button is-normal is-rounded is-dark"
-                               href="https://github.com/ashmibanerjee/crs-chatbot">
-                            <span class="icon">
-                               <i class="fab fa-github"></i>
-                            </span>
-                            <span>Code</span>
-                            </a>
-                </span>
-        </div>
+      <div class="is-size-5 publication-authors" style="margin-top:0.25rem;">
+        <span class="author-block"><sup>1*</sup>Technical University of Munich, Germany</span>
+        <span class="author-block"><sup>2</sup>Polytechnic University of Bari, Italy</span>
+      </div>
+
+      <div class="buttons is-centered" style="margin-top:1rem;">
+        <a class="external-link button is-normal is-rounded is-dark" href="">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+          <span>Paper</span>
+        </a>
+        <a class="external-link button is-normal is-rounded is-dark" href="">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+        <a class="external-link button is-normal is-rounded is-dark" href="https://youtu.be/BdtEFSp42fw">
+          <span class="icon"><i class="fa-brands fa-youtube"></i></span>
+          <span>Demo Video</span>
+        </a>
+        <a class="external-link button is-normal is-rounded is-dark" href="https://github.com/ashmibanerjee/crs-chatbot">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          <span>Code</span>
+        </a>
+      </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  </div>
 </section>
 
 
@@ -130,15 +85,23 @@
             </div>
             <br><br>
             <p>
-                Many conversational travel recommender systems focus almost exclusively on immediate user relevance and convenience. While effective, this emphasis can unintentionally encourage travel to overcrowded destinations and promote carbon-intensive choices.
+                Traditional conversational travel recommender systems primarily optimize for user
+                relevance and convenience, often reinforcing popular, overcrowded destinations
+                and carbon-intensive travel choices. To address this, we present <strong>TRACE</strong> (<b>T</b>ourism
+                <b>R</b>ecommendation
+                with <b>A</b>gentic <b>C</b>ounterfactual <b>E</b>xplanations), a multi-agent,
+                LLM-based framework designed to promote sustainable tourism through interactive
+                nudging. TRACE uses a modular orchestrator-worker architecture where specialized
+                agents elicit latent sustainability preferences, construct structured user
+                personas, and generate recommendations that balance relevance with environmental
+                impact.
             </p>
 
             <p>
-                To address this gap we propose <strong>TRACE</strong> (Tourism Recommendation with <em>Agentic Counterfactual Explanations</em>), a modular, multi-agent, LLM-based framework that nudges users toward more sustainable options while preserving recommendation quality. TRACE uses an orchestrator–worker architecture in which specialized agents elicit latent sustainability preferences, build concise user personas, and generate recommendations that balance personal relevance with environmental impact.
-            </p>
-
-            <p>
-                A key contribution of TRACE is its use of <em>agentic counterfactual explanations</em>: lightweight, transparent suggestions that present greener alternatives and encourage reflection instead of coercion. We implement TRACE using Google’s Agent Development Kit and evaluate the approach through a user study and complementary semantic-alignment analyses, showing that TRACE can support more sustainable decision-making without degrading recommendation utility.
+                A key innovation is its use of <em>agentic counterfactual
+                explanations</em>, which expose users to greener alternatives to foster reflection without coercion. User studies and semantic alignment analyses demonstrate that TRACE effectively supports sustainable decision-making while preserving recommendation quality and interactive responsiveness.
+                TRACE is implemented on Google’s Agent Development Kit, with full code, Docker
+                setup, prompts, and a publicly available demo video to ensure reproducibility.
             </p>
             <br><br>
             <div class="row">
@@ -161,34 +124,40 @@
             <div class="row">
                 <h2 class="title is-3 has-text-centered">System Design</h2>
             </div>
-            <br><br>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <br>
+            <!-- Overall caption / description (kept concise) -->
+            <div class="has-text-centered" style="max-width:60rem;margin:0 auto 0.75rem auto;">
+                <p style="margin:2rem;">TRACE follows a modular, multi-agent
+                    orchestrator–worker design: specialized LLM agents coordinate to elicit preferences, construct personas, generate sustainability-aware recommendations, and offer concise counterfactual explanations.</p>
+            </div>
 
-            <br><br>
-            <figure>
-                <img alt="Method Overview" src="static/images/architecture.png">
-                <figcaption style="text-align: center">[Fig.1]
-                    Overview of the architecture of
-                    TRACE
-                    framework for sustainable tourism recommendation with agentic
-                    counterfactual explanations.
-                </figcaption>
-            </figure>
-            <br><br>
+            <!-- System design cards stacked vertically (workflow first, then architecture) -->
+            <div class="system-cards" style="max-width:50rem;margin:0 auto 1rem auto;">
+                <div class="card" style="margin-bottom:1rem;">
+                    <div class="card-image">
+                        <figure class="image is-16by9">
+                            <img alt="Workflow" src="static/images/example_workflow.png" style="border-radius:8px;">
+                        </figure>
+                    </div>
+                    <div class="card-content has-text-centered">
+                        <p class="is-size-6 has-text-weight-semibold" style="margin:0.25rem 0 0;">Fig.2 — Workflow</p>
+                    </div>
+                </div>
 
-<!-- Prompts section: dynamically load prompt files from static/prompts -->
-<section id="prompts" class="prompts-section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Prompts</h2>
-    <p class="has-text-centered"
-       style="max-width:56rem;margin:0 auto 1rem auto;color:#374151;">The prompt templates used
-        by the TRACE agents. Click "View" to expand a full prompt and use "Copy" to copy the
-        template to the clipboard. You can also find them <a href="https://github.com/ashmibanerjee/trace-crs-chatbot/tree/main/backend/prompts">on GitHub</a>.</p>
-    <div class="prompts-grid" id="prompts-grid">
-      <!-- Cards will be inserted here by static/js/prompts.js -->
-    </div>
-  </div>
-</section>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-16by9">
+                            <img alt="Architecture" src="static/images/architecture.png" style="border-radius:8px;">
+                        </figure>
+                    </div>
+                    <div class="card-content has-text-centered">
+                        <p class="is-size-6 has-text-weight-semibold" style="margin:0.25rem 0 0;">Fig.1 — Architecture</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spacer: use utility class for responsive vertical spacing -->
+            <div class="spacer spacer--xl"></div>
 
             <div class="row">
                 <h2 class="title is-3 has-text-centered">Acknowledgments</h2>
