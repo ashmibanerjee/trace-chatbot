@@ -261,3 +261,75 @@ body {
 @media (max-height: 700px) {
     .github-fab { bottom: 18px; }
 }
+
+/* Spacer utility classes: use empty <div class="spacer spacer--xl"></div> for vertical spacing */
+.spacer { display: block; width: 100%; }
+
+/* Default sizes (desktop-first) */
+.spacer--xl { height: 3.5rem; }
+.spacer--lg { height: 2.5rem; }
+.spacer--sm { height: 1.5rem; }
+
+/* Tablet and smaller: reduce heights for better fit */
+@media (max-width: 768px) {
+  .spacer--xl { height: 2.5rem; }
+  .spacer--lg { height: 1.5rem; }
+  .spacer--sm { height: 1rem; }
+}
+
+/* Mobile: compact spacing */
+@media (max-width: 480px) {
+  .spacer--xl { height: 1.5rem; }
+  .spacer--lg { height: 1rem; }
+  .spacer--sm { height: 0.75rem; }
+}
+
+/* System design cards: avoid stretched / compressed images */
+.system-cards .card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  max-width: 56rem; /* limit width so stacked cards are not too wide */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Desktop: use wider aspect ratio so cards don't appear narrow */
+.system-cards .card-image figure.image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Ensure the img fills the figure and preserves its aspect with cover */
+.system-cards .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.system-cards .card-content {
+  padding-top: 0.6rem;
+  padding-bottom: 0.9rem;
+}
+
+/* Hover lift for subtle interactivity */
+.system-cards .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+}
+
+/* Constrain visual height on very large screens to keep balance */
+@media (min-width: 1200px) {
+  .system-cards .card-image figure.image { max-height: 320px; }
+}
+
+/* Mobile/tablet: use 4:3 to avoid overly wide images and reduce max-height */
+@media (max-width: 1024px) {
+  .system-cards .card-image figure.image {
+    aspect-ratio: 4 / 3;
+    max-height: 260px;
+  }
+}
