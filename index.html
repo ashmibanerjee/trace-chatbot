@@ -1,251 +1,254 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta content="generate travel recommendations using LLMs"
-          name="description">
-    <meta content="TRACE, conversations, LLM-agents, RecSys"
-          name="keywords">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</title>
-
-    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-          rel="stylesheet">
-
-    <link href="./static/css/bulma.min.css" rel="stylesheet">
-    <link href="./static/css/bulma-carousel.min.css" rel="stylesheet">
-    <link href="./static/css/bulma-slider.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
-          rel="stylesheet">
-    <link href="./static/css/index.css" rel="stylesheet">
-    <link href="./static/css/grid.css" rel="stylesheet">
-    <!-- Prompts CSS -->
-    <link href="./static/css/prompts.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bibtex-js/0.3.0/bibtex.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="./static/js/fontawesome.all.min.js"></script>
-    <script src="./static/js/bulma-carousel.min.js"></script>
-    <script src="./static/js/bulma-slider.min.js"></script>
-    <script src="./static/js/index.js"></script>
-    <!-- Prompts JS -->
-    <script src="./static/js/prompts.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</title>
+  <meta name="description" content="TRACE is a multi-agent, LLM-based framework that promotes sustainable tourism through interactive nudging and agentic counterfactual explanations." />
+  <meta name="keywords" content="TRACE, conversations, LLM-agents, RecSys, sustainable tourism, counterfactual explanations" />
+  <meta name="author" content="Ashmi Banerjee, Adithi Satish, Wolfgang Wörndl, Yashar Deldjoo" />
+  <meta property="og:title" content="TRACE: A Conversational Framework for Sustainable Tourism Recommendation" />
+  <meta property="og:description" content="A multi-agent, LLM-based framework promoting sustainable tourism through interactive nudging and counterfactual explanations." />
+  <meta property="og:type" content="website" />
+  
+  <link rel="stylesheet" href="static/css/style.css" />
+  <link rel="stylesheet" href="static/css/components.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
 </head>
 <body>
 
+  <!-- NAVIGATION -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="#" class="navbar__brand" aria-label="TRACE home">
+        <span>TRACE</span> Chatbot
+      </a>
+      <button class="navbar__toggle" id="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation menu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <ul class="navbar__links" id="nav-links" role="list">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#demo">Demo & Video</a></li>
+        <li><a href="#system">System Design</a></li>
+        <li><a href="#acknowledgment">Acknowledgment</a></li>
+        <li><a href="#bibtex">BibTeX</a></li>
+      </ul>
+    </div>
+  </nav>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop has-text-centered">
-      <h1 class="title is-2 publication-title">
-        <span class="main-title">TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</span>
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <div class="container">
+      <div class="hero__venue-badge">
+        Accepted at <strong>SIGIR 2026</strong> &nbsp;&middot;&nbsp; Melbourne, Victoria, Australia
+      </div>
+      <h1 class="hero__title">
+        <span class="highlight">TRACE:</span> A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations
       </h1>
-
-      <div class="is-size-5 publication-authors" style="margin-top:0.5rem;">
-        <span class="author-block"><a href="https://ashmibanerjee.com">Ashmi Banerjee</a><sup>1</sup>,</span>
-        <span class="author-block"><a href="https://www.linkedin.com/in/adithi-satish/">Adithi Satish</a><sup>1</sup>,</span>
-        <span class="author-block"><a href="https://www.ce.cit.tum.de/cm/research-group/wolfgang-woerndl">Wolfgang Wörndl</a><sup>1</sup>,</span>
-        <span class="author-block"><a href="https://yasdel.github.io/">Yashar Deldjoo</a><sup>2</sup></span>
+      <div class="hero__authors">
+        <span class="author-block"><a href="https://ashmibanerjee.com" target="_blank" rel="noopener">Ashmi Banerjee</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://www.linkedin.com/in/adithi-satish/" target="_blank" rel="noopener">Adithi Satish</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://www.ce.cit.tum.de/cm/research-group/wolfgang-woerndl" target="_blank" rel="noopener">Wolfgang Wörndl</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://yasdel.github.io/" target="_blank" rel="noopener">Yashar Deldjoo</a><sup>2</sup></span>
       </div>
-
-      <div class="is-size-5 publication-authors" style="margin-top:0.25rem;">
-        <span class="author-block"><sup>1*</sup>Technical University of Munich, Germany</span>
-        <span class="author-block"><sup>2</sup>Polytechnic University of Bari, Italy</span>
+      <div class="hero__affiliations">
+        <span><sup>1</sup> Technical University of Munich, Germany</span>
+        &emsp;
+        <span><sup>2</sup> Polytechnic University of Bari, Italy</span>
       </div>
-
-      <div class="buttons is-centered" style="margin-top:1rem;">
-        <a class="external-link button is-normal is-rounded is-dark" href="https://dl.acm.org/doi/10.1145/3805712.3808370" target="_blank" rel="noopener noreferrer">
-          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+      <div class="btn-group">
+        <a class="btn btn--dark" href="https://dl.acm.org/doi/10.1145/3805712.3808370" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-file-pdf btn-icon" aria-hidden="true"></i>
           <span>Paper</span>
         </a>
-        <a class="external-link button is-normal is-rounded is-dark" href="https://arxiv.org/abs/2604.14223" target="_blank" rel="noopener noreferrer">
-          <span class="icon"><i class="ai ai-arxiv"></i></span>
+        <a class="btn btn--dark" href="https://arxiv.org/abs/2604.14223" target="_blank" rel="noopener noreferrer">
+          <i class="ai ai-arxiv btn-icon" aria-hidden="true"></i>
           <span>arXiv</span>
         </a>
-        <a class="external-link button is-normal is-rounded is-dark" href="https://huggingface.co/spaces/ashmib/trace-crs-chatbot" target="_blank" rel="noopener noreferrer">
-          <span class="icon"><i class="fas fa-rocket"></i></span>
+        <a class="btn btn--dark" href="https://huggingface.co/spaces/ashmib/trace-crs-chatbot" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-rocket btn-icon" aria-hidden="true"></i>
           <span>Live Demo</span>
         </a>
-        <a class="external-link button is-normal is-rounded is-dark" href="https://youtu.be/BdtEFSp42fw" target="_blank" rel="noopener noreferrer">
-          <span class="icon"><i class="fa-brands fa-youtube"></i></span>
+        <a class="btn btn--dark" href="https://youtu.be/BdtEFSp42fw" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-youtube btn-icon" aria-hidden="true"></i>
           <span>Demo Video</span>
         </a>
-        <a class="external-link button is-normal is-rounded is-dark" href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer">
-          <span class="icon"><i class="fab fa-github"></i></span>
+        <a class="btn btn--dark" href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github btn-icon" aria-hidden="true"></i>
           <span>Code</span>
         </a>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-
-<section class="section">
-<!--    <br><br>-->
-    <div class="container is-max-desktop">
-        <div class="rows is-centered">
-            <div class="row">
-                <h2 class="title is-3 has-text-centered">Abstract</h2>
-            </div>
-            <br><br>
-            <p>
-                Traditional conversational travel recommender systems primarily optimize for user
-                relevance and convenience, often reinforcing popular, overcrowded destinations
-                and carbon-intensive travel choices. To address this, we present <strong>TRACE</strong> (<b>T</b>ourism
-                <b>R</b>ecommendation
-                with <b>A</b>gentic <b>C</b>ounterfactual <b>E</b>xplanations), a multi-agent,
-                LLM-based framework designed to promote sustainable tourism through interactive
-                nudging. TRACE uses a modular orchestrator-worker architecture where specialized
-                agents elicit latent sustainability preferences, construct structured user
-                personas, and generate recommendations that balance relevance with environmental
-                impact.
-            </p>
-
-            <p>
-                A key innovation is its use of <em>agentic counterfactual
-                explanations</em>, which expose users to greener alternatives to foster reflection without coercion. User studies and semantic alignment analyses demonstrate that TRACE effectively supports sustainable decision-making while preserving recommendation quality and interactive responsiveness.
-                TRACE is implemented on Google’s Agent Development Kit, with full code, Docker
-                setup, prompts, and a publicly available demo video to ensure reproducibility.
-            </p>
-            <br><br>
-            <div class="row">
-                <h2 class="title is-3 has-text-centered">Live Demo & Demo Video</h2>
-            </div>
-            <div class="container is-max-desktop">
-                <div class="demo-split-layout">
-                    <!-- Left: Video Column -->
-                    <div class="demo-video-column">
-                        <div class="video-wrapper">
-                            <iframe
-                                    src="https://www.youtube.com/embed/BdtEFSp42fw?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1"
-                                    allowfullscreen>
-                            </iframe>
-                        </div>
-                        <div class="video-caption">
-                            <i class="fa-brands fa-youtube" style="color: #ff0000;"></i>
-                            <span>TRACE: System Demonstration Video</span>
-                        </div>
-                        <div class="video-description-note">
-                            <i class="fas fa-triangle-exclamation" style="color: #ffaa00; margin-right: 8px;"></i>
-                            <span><strong>Deployment Note:</strong> The original production backend was deployed on Google Cloud Run and used Chainlit 2.3.0 as the frontend server. After a security vulnerability was disclosed in Chainlit 2.3.0 (dependency-level CVE), that Cloud Run deployment was taken offline. This Hugging Face Spaces version was built as a replacement demo to ensure a secure, patched, and publicly accessible environment.</span>
-                        </div>
-                    </div>
-
-                    <!-- Right: Info/Live Demo Column -->
-                    <div class="demo-info-column">
-                        <div class="live-badge">LIVE</div>
-                        <h3>Try the Interactive Chatbot</h3>
-                        <p class="demo-description">
-                            Experience TRACE's multi-agent conversational travel recommendations and agentic counterfactual explanations directly in your browser.
-                        </p>
-                        
-                        <a href="https://huggingface.co/spaces/ashmib/trace-crs-chatbot" target="_blank" rel="noopener noreferrer" class="launch-btn">
-                            <i class="fas fa-rocket"></i>
-                            <span>Launch Live Demo</span>
-                            <i class="fas fa-arrow-right" style="margin-left: auto;"></i>
-                        </a>
-
-                        <div class="details-card">
-                            <h4 style="font-weight: 600; margin-bottom: 12px; font-size: 0.85rem; color: #363636;">HF Spaces Replacement Specifications:</h4>
-                            <ul class="tech-list">
-                                <li>
-                                    <i class="fas fa-shield-halved"></i>
-                                    <span>Chainlit is pinned to 2.11.1 (patched)</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-brain"></i>
-                                    <span>The full ADK multi-agent pipeline is preserved for the Gemini profile</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-bolt"></i>
-                                    <span>A lighter Gemma pipeline handles the free tier without requiring a Google account</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-database"></i>
-                                    <span>Firestore is disabled by default (<code>USE_FIRESTORE=false</code>); conversations are stored in a private HF Dataset repo instead</span>
-                                </li>
-                                <li>
-                                    <i class="fas fa-network-wired"></i>
-                                    <span>API routes are prefixed at <code>/api/</code> and Chainlit is mounted at <code>/</code> (no redirect chain)</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <h2 class="title is-3 has-text-centered">System Design</h2>
-            </div>
-            <br>
-            <!-- Overall caption / description (kept concise) -->
-            <div class="has-text-centered" style="max-width:60rem;margin:0 auto 0.75rem auto;">
-                <p style="margin:2rem;">TRACE follows a modular, multi-agent
-                    orchestrator–worker design: specialized LLM agents coordinate to elicit preferences, construct personas, generate sustainability-aware recommendations, and offer concise counterfactual explanations.</p>
-            </div>
-
-            <!-- System design cards stacked vertically (workflow first, then architecture) -->
-            <div class="system-cards" style="max-width:50rem;margin:0 auto 1rem auto;">
-                <div class="card" style="margin-bottom:1rem;">
-                    <div class="card-image">
-                        <figure class="image is-16by9">
-                            <img alt="Workflow" src="static/images/example_workflow.png" style="border-radius:8px;">
-                        </figure>
-                    </div>
-                    <div class="card-content has-text-centered">
-                        <p class="is-size-6 has-text-weight-semibold" style="margin:0.25rem 0 0;">Fig.2 — Workflow</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-16by9">
-                            <img alt="Architecture" src="static/images/architecture.png" style="border-radius:8px;">
-                        </figure>
-                    </div>
-                    <div class="card-content has-text-centered">
-                        <p class="is-size-6 has-text-weight-semibold" style="margin:0.25rem 0 0;">Fig.1 — Architecture</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Spacer: use utility class for responsive vertical spacing -->
-            <div class="spacer spacer--xl"></div>
-
-            <div class="row">
-                <h2 class="title is-3 has-text-centered">Acknowledgments</h2>
-            </div>
-            <br><br>
-            <p>We thank the <strong>Google AI/ML Developer Programs</strong>
-                team for
-                supporting us
-                with Google Cloud Credits.</p>
-        </div>
-    </div>
-</section>
-
-<footer class="footer">
+  <!-- ABSTRACT -->
+  <section class="section" id="abstract">
     <div class="container">
-        <div class="columns is-centered">
-            <div class="column is-8">
-                <div class="content has-text-centered">
-                    <p>
-                        Website source based on <a
-                            href="https://github.com/nerfies/nerfies.github.io">this
-                        source code</a>.
-                    </p>
-                </div>
-            </div>
-        </div>
+      <div class="section-divider">
+        <h2 class="section-title">Abstract</h2>
+      </div>
+      <div class="abstract-box">
+        <p>
+          Traditional conversational travel recommender systems primarily optimize for user
+          relevance and convenience, often reinforcing popular, overcrowded destinations
+          and carbon-intensive travel choices. To address this, we present <strong>TRACE</strong>
+          (<b>T</b>ourism <b>R</b>ecommendation with <b>A</b>gentic <b>C</b>ounterfactual <b>E</b>xplanations), a multi-agent,
+          LLM-based framework designed to promote sustainable tourism through interactive
+          nudging. TRACE uses a modular orchestrator-worker architecture where specialized
+          agents elicit latent sustainability preferences, construct structured user
+          personas, and generate recommendations that balance relevance with environmental impact.
+        </p>
+        <br />
+        <p>
+          A key innovation is its use of <em>agentic counterfactual
+          explanations</em>, which expose users to greener alternatives to foster reflection without
+          coercion. User studies and semantic alignment analyses demonstrate that TRACE effectively supports
+          sustainable decision-making while preserving recommendation quality and interactive responsiveness.
+          TRACE is implemented on Google’s Agent Development Kit, with full code, Docker
+          setup, prompts, and a publicly available demo video to ensure reproducibility.
+        </p>
+      </div>
+      <div class="tag-list">
+        <span class="tag">Conversational RecSys</span>
+        <span class="tag tag--green">Sustainable Tourism</span>
+        <span class="tag tag--orange">Counterfactual Explanations</span>
+        <span class="tag tag--purple">LLM Agents</span>
+      </div>
     </div>
-</footer>
+  </section>
 
-<!-- Floating GitHub call-to-action button: visible on desktop, hidden on very small screens -->
-<a class="github-fab" href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
-    <span class="fab-icon"><i class="fab fa-github" aria-hidden="true"></i></span>
-    <span class="fab-text">View code</span>
-</a>
+  <!-- LIVE DEMO & VIDEO -->
+  <section class="section section--alt" id="demo">
+    <div class="container">
+      <div class="section-divider">
+        <h2 class="section-title">Live Demo & Demo Video</h2>
+      </div>
+      
+      <div class="results-figures" style="grid-template-columns: 1fr 1fr; align-items: stretch; gap: 2rem;">
+        <!-- Video Panel -->
+        <div class="result-figure card-panel">
+          <div class="video-container">
+            <iframe
+              src="https://www.youtube.com/embed/BdtEFSp42fw?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="result-figure__caption" style="margin-top: 1rem;">
+            <strong>TRACE: System Demonstration Video</strong><br>
+            <span style="color: #ffaa00;"><i class="fas fa-triangle-exclamation"></i> Deployment Note:</span> The original production backend was deployed on Google Cloud Run and used Chainlit 2.3.0. After a security vulnerability in Chainlit 2.3.0, that deployment was taken offline. This Hugging Face Spaces version is a secure, patched replacement demo.
+          </div>
+        </div>
 
+        <!-- Info Panel -->
+        <div class="result-figure card-panel">
+          <div style="display: inline-block; background: #e63946; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; font-size: 0.75rem; margin-bottom: 1rem;">LIVE</div>
+          <h3 style="margin-bottom: 0.5rem; color: var(--color-dark);">Try the Interactive Chatbot</h3>
+          <p style="color: var(--color-text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Experience TRACE's multi-agent conversational travel recommendations and agentic counterfactual explanations directly in your browser.
+          </p>
+          <a class="btn btn--dark" href="https://huggingface.co/spaces/ashmib/trace-crs-chatbot" target="_blank" rel="noopener noreferrer" style="margin-bottom: 2rem;">
+            <i class="fas fa-rocket btn-icon"></i> Launch Live Demo
+          </a>
+
+          <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">HF Spaces Replacement Specifications:</h4>
+          <ul style="list-style: none; padding: 0; font-size: 0.85rem; color: var(--color-text-light);">
+            <li style="margin-bottom: 0.5rem;"><i class="fas fa-shield-halved" style="color: var(--color-primary); width: 20px;"></i> Chainlit is pinned to 2.11.1 (patched)</li>
+            <li style="margin-bottom: 0.5rem;"><i class="fas fa-brain" style="color: var(--color-primary); width: 20px;"></i> Full ADK multi-agent pipeline preserved for Gemini</li>
+            <li style="margin-bottom: 0.5rem;"><i class="fas fa-bolt" style="color: var(--color-primary); width: 20px;"></i> Lighter Gemma pipeline for free tier</li>
+            <li style="margin-bottom: 0.5rem;"><i class="fas fa-database" style="color: var(--color-primary); width: 20px;"></i> Firestore disabled; conversations in private HF Dataset</li>
+            <li><i class="fas fa-network-wired" style="color: var(--color-primary); width: 20px;"></i> API routes at <code>/api/</code>, Chainlit at <code>/</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEM DESIGN -->
+  <section class="section" id="system">
+    <div class="container">
+      <div class="section-divider">
+        <h2 class="section-title">System Design</h2>
+      </div>
+      <p class="text-center" style="max-width: 800px; margin-inline: auto; color: var(--color-text-light); margin-bottom: var(--space-xl);">
+        TRACE follows a modular, multi-agent orchestrator–worker design: specialized LLM agents coordinate to elicit preferences, construct personas, generate sustainability-aware recommendations, and offer concise counterfactual explanations.
+      </p>
+      
+      <div class="framework-figure">
+        <img src="static/images/example_workflow.png" alt="TRACE Workflow Diagram" style="max-width: 800px; margin-inline: auto; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--color-border); margin-bottom: var(--space-lg);" />
+        <figcaption>
+          <strong>Figure 2.</strong> Workflow Diagram of the TRACE Framework
+        </figcaption>
+      </div>
+      
+      <div class="framework-figure" style="margin-top: var(--space-xl);">
+        <img src="static/images/architecture.png" alt="TRACE Architecture Diagram" style="max-width: 800px; margin-inline: auto; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--color-border); margin-bottom: var(--space-lg);" />
+        <figcaption>
+          <strong>Figure 1.</strong> Architecture of the TRACE System
+        </figcaption>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACKNOWLEDGMENT -->
+  <section class="section section--alt" id="acknowledgment">
+    <div class="container">
+      <div class="section-divider">
+        <h2 class="section-title">Acknowledgment</h2>
+      </div>
+      <div class="abstract-box" style="text-align: center;">
+        <p>
+          We thank the <strong>Google Developer Experts (GDE) Program</strong> for their generous support through Google Cloud Credits.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIBTEX -->
+  <section class="section" id="bibtex">
+    <div class="container">
+      <div class="section-divider">
+        <h2 class="section-title">BibTeX</h2>
+      </div>
+      <div class="bibtex-box">
+        <button class="copy-btn" id="copy-bibtex" aria-label="Copy BibTeX to clipboard">Copy BibTeX</button>
+        <pre id="bibtex-content"><span class="bibtex-type">@inproceedings</span><span class="bibtex-brace">{</span><span class="bibtex-key">banerjee2026trace</span><span class="bibtex-brace">,</span>
+  <span class="bibtex-key">title</span>     = <span class="bibtex-brace">{</span><span class="bibtex-value">TRACE: A Conversational Framework for Sustainable Tourism Recommendation with Agentic Counterfactual Explanations</span><span class="bibtex-brace">},</span>
+  <span class="bibtex-key">author</span>    = <span class="bibtex-brace">{</span><span class="bibtex-value">Banerjee, Ashmi and Satish, Adithi and W{\"o}rndl, Wolfgang and Deldjoo, Yashar</span><span class="bibtex-brace">},</span>
+  <span class="bibtex-key">booktitle</span> = <span class="bibtex-brace">{</span><span class="bibtex-value">Proceedings of the 49th International ACM SIGIR Conference on Research and Development in Information Retrieval</span><span class="bibtex-brace">},</span>
+  <span class="bibtex-key">pages</span>     = <span class="bibtex-brace">{</span><span class="bibtex-value">5129--5134</span><span class="bibtex-brace">},</span>
+  <span class="bibtex-key">year</span>      = <span class="bibtex-brace">{</span><span class="bibtex-value">2026</span><span class="bibtex-brace">}</span>
+<span class="bibtex-brace">}</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__icon-links">
+        <a href="https://arxiv.org/abs/2604.14223" target="_blank" rel="noopener noreferrer" aria-label="arXiv paper">
+          <i class="ai ai-arxiv" aria-hidden="true"></i>
+        </a>
+        <a href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+          <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+        <a href="https://ashmibanerjee.com" target="_blank" rel="noopener noreferrer" aria-label="Author website">
+          <i class="fas fa-globe" aria-hidden="true"></i>
+        </a>
+      </div>
+      <p>
+        Website inspired by
+        <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.
+      </p>
+    </div>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <script src="static/js/main.js" defer></script>
 </body>
 </html>
-
-
