@@ -1,0 +1,912 @@
+/* ===================================================
+   COLLAB-REC Project Website — Main Stylesheet
+   Modular, responsive, no duplication
+   =================================================== */
+
+/* --- 1. Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Source+Code+Pro&display=swap');
+
+/* --- 2. CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Colors */
+  --color-primary:        hsl(204, 86%, 53%);
+  --color-primary-dark:   hsl(204, 86%, 38%);
+  --color-accent:         hsl(340, 82%, 52%);
+  --color-dark:           hsl(220, 20%, 12%);
+  --color-dark-secondary: hsl(220, 15%, 18%);
+  --color-text:           hsl(220, 15%, 20%);
+  --color-text-light:     hsl(220, 10%, 45%);
+  --color-border:         hsl(220, 15%, 88%);
+  --color-bg:             hsl(0, 0%, 100%);
+  --color-bg-alt:         hsl(220, 20%, 97%);
+  --color-success:        hsl(142, 72%, 29%);
+  --color-tag-bg:         hsl(204, 86%, 94%);
+
+  /* Typography */
+  --font-title:   'Google Sans', 'Noto Sans', sans-serif;
+  --font-body:    'Noto Sans', sans-serif;
+  --font-mono:    'Source Code Pro', monospace;
+
+  /* Spacing */
+  --space-xs:   0.25rem;
+  --space-sm:   0.5rem;
+  --space-md:   1rem;
+  --space-lg:   2rem;
+  --space-xl:   3rem;
+  --space-2xl:  5rem;
+
+  /* Layout */
+  --max-width:        960px;
+  --max-width-wide:   1200px;
+  --border-radius:    10px;
+  --border-radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:  0 6px 20px rgba(0,0,0,0.10);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,0.13);
+
+  /* Transitions */
+  --transition: 0.2s ease;
+}
+
+/* --- 3. Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* --- 4. Layout Utilities --- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+.container--wide {
+  max-width: var(--max-width-wide);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section--alt {
+  background: var(--color-bg-alt);
+}
+
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+
+/* --- 5. Typography --- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-title);
+  line-height: 1.25;
+  color: var(--color-dark);
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; }
+h2 { font-size: clamp(1.4rem, 3vw, 2rem);    font-weight: 700; }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 500; }
+h4 { font-size: 1rem; font-weight: 700; }
+
+.section-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: var(--space-md);
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 2px;
+  background: var(--color-border);
+}
+
+p {
+  max-width: 75ch;
+}
+
+/* --- 6. Navigation --- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-md);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+.navbar__brand {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
+.navbar__brand span {
+  color: var(--color-primary);
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+.navbar__links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  transition: color var(--transition);
+}
+
+.navbar__links a:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.navbar__toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: var(--color-dark);
+  padding: var(--space-xs);
+}
+
+/* --- 7. Hero Section --- */
+.hero {
+  padding-block: var(--space-2xl);
+  text-align: center;
+  background: linear-gradient(180deg, hsl(220, 30%, 98%) 0%, var(--color-bg) 100%);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero__venue-badge {
+  display: inline-block;
+  background: var(--color-tag-bg);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 100px;
+  margin-bottom: var(--space-lg);
+  border: 1px solid hsl(204, 86%, 80%);
+  font-family: var(--font-title);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.hero__title {
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--color-dark);
+  max-width: 1100px;
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+  line-height: 1.2;
+}
+
+.hero__title .highlight {
+  color: var(--color-primary);
+}
+
+.hero__authors {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.hero__authors a {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.hero__authors a:hover {
+  color: var(--color-primary-dark);
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.author-block sup {
+  font-size: 0.65em;
+}
+
+.hero__affiliations {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xl);
+}
+
+.hero__affiliations sup {
+  font-size: 0.7em;
+}
+
+/* --- 8. Button Group (Link Badges) --- */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.45rem 1.1rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--font-title);
+  transition: all var(--transition);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.btn--dark {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: var(--color-dark);
+}
+
+.btn--dark:hover {
+  background: var(--color-dark-secondary);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-dark);
+  border-color: var(--color-border);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.btn i, .btn .btn-icon {
+  font-size: 0.9em;
+}
+
+/* --- 9. Teaser / Banner Image --- */
+.teaser {
+  padding-block: var(--space-xl);
+  text-align: center;
+}
+
+.teaser__figure {
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+.teaser__img {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+/* Placeholder image styling */
+.placeholder-img {
+  background: linear-gradient(135deg, hsl(220, 20%, 92%) 0%, hsl(220, 25%, 85%) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  font-family: var(--font-title);
+  gap: var(--space-sm);
+  border-radius: var(--border-radius-lg);
+  border: 2px dashed var(--color-border);
+}
+
+.placeholder-img i {
+  font-size: 3rem;
+  opacity: 0.4;
+}
+
+.placeholder-img span {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.teaser__caption {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-top: var(--space-md);
+  font-style: italic;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+/* --- 10. Abstract Section --- */
+.abstract-box {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+.abstract-box p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  max-width: none;
+}
+
+/* --- 11. Contributions / Key Points --- */
+.contributions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.contribution-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contribution-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.contribution-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius);
+  background: var(--color-tag-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 1.4rem;
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.contribution-card__title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+.contribution-card__text {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  max-width: none;
+}
+
+/* --- 12. Framework / Architecture Section --- */
+.framework-figure {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.framework-figure figcaption {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-top: var(--space-md);
+  font-style: italic;
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+/* --- 13. Agent Cards --- */
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.agent-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+  border-top: 4px solid var(--agent-color, var(--color-primary));
+}
+
+.agent-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.agent-card--personalization { --agent-color: hsl(204, 86%, 53%); }
+.agent-card--popularity      { --agent-color: hsl(35, 90%, 52%); }
+.agent-card--sustainability   { --agent-color: hsl(142, 60%, 40%); }
+
+.agent-card__tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-title);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--agent-color) 15%, transparent);
+  color: var(--agent-color);
+  margin-bottom: var(--space-sm);
+}
+
+.agent-card__name {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-dark);
+  margin-bottom: var(--space-sm);
+}
+
+.agent-card__text {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  line-height: 1.65;
+  max-width: none;
+}
+
+/* --- 14. Results / Figures Section --- */
+.results-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.result-figure {
+  text-align: center;
+}
+
+.result-figure__img {
+  width: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-sm);
+}
+
+.result-figure__caption {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  margin-top: var(--space-sm);
+  font-style: italic;
+}
+
+/* --- 15. Metrics / Stats Row --- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.stat-item__number {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.stat-item__label {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+/* --- 16. BibTeX Section --- */
+.bibtex-box {
+  background: hsl(220, 20%, 13%);
+  color: hsl(220, 20%, 80%);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  position: relative;
+  max-width: 800px;
+  margin-inline: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.bibtex-box pre {
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.copy-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: var(--border-radius);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.copy-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.copy-btn.copied {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+/* Syntax highlighting for bibtex */
+.bibtex-key   { color: hsl(204, 86%, 75%); }
+.bibtex-value { color: hsl(35, 90%, 70%); }
+.bibtex-type  { color: hsl(280, 70%, 75%); }
+.bibtex-brace { color: hsl(220, 20%, 65%); }
+
+/* --- 17. Footer --- */
+.footer {
+  background: var(--color-dark);
+  color: hsl(220, 15%, 65%);
+  padding-block: var(--space-xl);
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.footer p {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.footer a {
+  color: hsl(220, 15%, 75%);
+}
+
+.footer a:hover {
+  color: var(--color-primary);
+}
+
+.footer__icon-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.footer__icon-links a {
+  font-size: 1.4rem;
+  color: hsl(220, 15%, 55%);
+  transition: color var(--transition);
+}
+
+.footer__icon-links a:hover {
+  color: var(--color-primary);
+}
+
+/* --- 18. Responsive Breakpoints --- */
+@media (max-width: 768px) {
+  :root {
+    --space-2xl: 3rem;
+    --space-xl:  2rem;
+    --space-lg:  1.25rem;
+  }
+
+  .navbar__links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-md) var(--space-lg);
+    gap: var(--space-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .navbar__links.is-open {
+    display: flex;
+  }
+
+  .navbar__toggle {
+    display: block;
+  }
+
+  .navbar__inner {
+    position: relative;
+  }
+
+  .contributions-grid,
+  .agents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-figures {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .abstract-box {
+    padding: var(--space-lg);
+  }
+
+  .bibtex-box {
+    font-size: 0.78rem;
+    padding: var(--space-lg);
+  }
+
+  .hero__title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* --- 19. Scroll-to-top button --- */
+.scroll-top {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 99;
+}
+
+.scroll-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-top:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- 20. Accessibility: focus styles --- */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- 21. Teaser real image --- */
+.teaser__img {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+}
+
+/* --- 22. Result subsections (RQ1–RQ5) --- */
+.result-subsection {
+  margin-bottom: var(--space-xl);
+}
+
+.result-subsection__title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+}
+
+.result-subsection__desc {
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  max-width: 700px;
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+}
+
+/* --- 23. Model tab switcher --- */
+.plot-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.plot-tab {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  background: var(--color-bg);
+  color: var(--color-text-light);
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.plot-tab:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-dark);
+  border-color: var(--color-primary);
+}
+
+.plot-tab.is-active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* --- 24. Plot panels (tab content areas) --- */
+.plot-panels {
+  position: relative;
+}
+
+.plot-panel {
+  display: none;
+}
+
+.plot-panel.is-active {
+  display: block;
+}
+
+/* --- 25. PDF embed via <object> --- */
+.pdf-embed {
+  display: block;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-bg-alt);
+}
+
+/* --- 26. Plot legend strip --- */
+.plot-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+.plot-legend img {
+  max-height: 70px;
+  width: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.5rem;
+  background: var(--color-bg);
+}
+
+/* --- 27. result-figure img (for PNG results) --- */
+.result-figure__img {
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* --- 28. Framework figure: center the img --- */
+.framework-figure img {
+  display: block;
+  width: 100%;
+}
+
