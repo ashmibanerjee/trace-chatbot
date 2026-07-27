@@ -234,3 +234,302 @@ tr:last-child td {
 tr:hover td {
   background: hsl(204, 86%, 98%);
 }
+
+/* =============================================================
+   Prompt Section — filter tabs, cards, code viewer
+   ============================================================= */
+
+/* --- Filter Tabs -------------------------------------------- */
+.prompt-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+}
+
+.prompt-filter-btn {
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  background: var(--color-bg);
+  color: var(--color-text-light);
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+  white-space: nowrap;
+}
+
+.prompt-filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: hsl(204, 86%, 97%);
+}
+
+.prompt-filter-btn.is-active {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: var(--color-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Prompts Grid ------------------------------------------- */
+.prompts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+/* --- Prompt Card -------------------------------------------- */
+.prompt-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--prompt-accent, var(--color-primary));
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.prompt-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* --- Card Header -------------------------------------------- */
+.prompt-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+}
+
+/* Coloured icon box */
+.prompt-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* Title + badge on same row, description below */
+.prompt-title-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.prompt-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: 0.2rem;
+}
+
+.prompt-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-dark);
+  line-height: 1.3;
+}
+
+/* Inline category badge */
+.prompt-badge {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.prompt-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+/* Toggle button */
+.prompt-toggle-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.9rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+  white-space: nowrap;
+}
+
+.prompt-toggle-btn:hover,
+.prompt-toggle-btn[aria-expanded="true"] {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: var(--color-dark);
+}
+
+.toggle-icon {
+  font-size: 0.65rem;
+  transition: transform 0.25s ease;
+}
+
+/* --- Preview Block ------------------------------------------ */
+.prompt-preview {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--color-text-light);
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  margin: 0;
+  padding: var(--space-md) var(--space-lg);
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* Clip to ~5 lines and fade out */
+  max-height: 110px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.2s ease;
+}
+
+.prompt-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: linear-gradient(transparent, var(--color-bg-alt));
+  pointer-events: none;
+}
+
+.prompt-preview.is-collapsed {
+  max-height: 0;
+  padding-block: 0;
+  opacity: 0;
+  border-top-width: 0;
+}
+
+/* --- Collapsible Code Wrapper ------------------------------ */
+/*
+  Uses the grid-template-rows: 0fr trick.
+  IMPORTANT: the wrapper must have exactly ONE direct child
+  (.prompt-code-inner) so the single track controls the height.
+*/
+.prompt-code-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.prompt-code-wrapper.is-expanded {
+  grid-template-rows: 1fr;
+}
+
+/* Single child — must have overflow:hidden AND min-height:0 for the 0fr trick.
+   Grid items default to min-height:auto; without min-height:0 they can't
+   collapse below their content height, making the animation invisible. */
+.prompt-code-inner {
+  overflow: hidden;
+  min-height: 0;
+  background: hsl(220, 20%, 12%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Code block */
+.prompt-code {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.65;
+  color: hsl(220, 15%, 80%);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding: var(--space-lg);
+  outline: none;
+  flex: 1;
+}
+
+/* Actions bar inside the code block */
+.prompt-wrapper-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg) var(--space-md);
+  border-top: 1px solid hsl(220, 15%, 20%);
+}
+
+/* Copy button */
+.prompt-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.85rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  color: hsl(220, 15%, 70%);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.prompt-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.prompt-copy-status {
+  font-size: 0.75rem;
+  color: hsl(142, 72%, 55%);
+  min-width: 5ch;
+}
+
+/* --- Responsive -------------------------------------------- */
+@media (max-width: 768px) {
+  .prompts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prompt-card-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .prompt-toggle-btn {
+    /* Push toggle to its own row on very narrow screens */
+    order: 3;
+    margin-left: auto;
+  }
+}

@@ -1,221 +1,270 @@
-// Dynamically load prompt files from static/prompts and render cards
-document.addEventListener('DOMContentLoaded', async function () {
-  // List of prompt files to load from static/prompts/ (kept in sync with repo)
-  const promptFiles = [
-    'rec_base.jinja2',
-    'rec_with_context.jinja2',
-    'intent_classification.jinja2',
-    'rec_baseline.jinja2',
-    'cqs_variant1.jinja2',
-    'cfe_combination.jinja2'
+/**
+ * prompts.js — Dynamically load, render, and filter prompt cards.
+ */
+(function () {
+  'use strict';
+
+  /* ─── Prompt Metadata ─────────────────────────────────────────────────── */
+  const PROMPTS = [
+    {
+      file:        'intent_classification.jinja2',
+      title:       'Intent Classifier',
+      description: 'Builds the user travel persona, intent, and ability to compromise from the user\'s query and clarifying answers.',
+      category:    'intent',
+      icon:        'fa-user-circle',
+      accent:      'hsl(280, 60%, 52%)',
+      accentBg:    'hsl(280, 70%, 93%)',
+    },
+    {
+      file:        'cqs_variant1.jinja2',
+      title:       'Clarifying Questions',
+      description: 'Probes locked vs. flexible sustainability preferences; ensures every valid request gets at least one trade-off question.',
+      category:    'clarification',
+      icon:        'fa-comments',
+      accent:      'hsl(204, 86%, 45%)',
+      accentBg:    'hsl(204, 86%, 94%)',
+    },
+    {
+      file:        'rec_base.jinja2',
+      title:       'Recommender — Base Template',
+      description: 'Shared foundation: strict output format, core rules, and prohibited outputs used by all recommendation agents.',
+      category:    'recommender',
+      icon:        'fa-layer-group',
+      accent:      'hsl(35, 90%, 45%)',
+      accentBg:    'hsl(35, 90%, 93%)',
+    },
+    {
+      file:        'rec_baseline.jinja2',
+      title:       'Recommender — Baseline',
+      description: 'Simple baseline prompt that extends the base template to generate a destination recommendation from the user\'s query.',
+      category:    'recommender',
+      icon:        'fa-map-pin',
+      accent:      'hsl(35, 90%, 45%)',
+      accentBg:    'hsl(35, 90%, 93%)',
+    },
+    {
+      file:        'rec_with_context.jinja2',
+      title:       'Context-Aware Recommender',
+      description: 'Sustainability-first recommendation prompt with strict decision criteria, explanation constraints, and trade-off handling.',
+      category:    'recommender',
+      icon:        'fa-leaf',
+      accent:      'hsl(142, 60%, 40%)',
+      accentBg:    'hsl(142, 60%, 92%)',
+    },
+    {
+      file:        'cfe_combination.jinja2',
+      title:       'Explanation Generator',
+      description: 'Produces the final recommendation and a counterfactual alternative; respects the user\'s inferred sustainability stance.',
+      category:    'explanation',
+      icon:        'fa-code-branch',
+      accent:      'hsl(340, 82%, 52%)',
+      accentBg:    'hsl(340, 82%, 94%)',
+    },
   ];
 
-  // Short descriptions for each prompt file (shown in the card meta)
-  const descriptions = {
-    'rec_base.jinja2': 'Base template: core rules and strict output format used by recommendation agents.',
-    'rec_with_context.jinja2': 'Context-aware recommendation prompt with sustainability decision criteria and explanation constraints.',
-    'intent_classification.jinja2': 'Builds the user travel persona, intent, and ability to compromise from user input.',
-    'rec_baseline.jinja2': 'Simple baseline recommendation prompt that extends the base template.',
-    'cqs_variant1.jinja2': 'Clarifying questions and sustainability probes to infer locked vs. flexible preferences.',
-    'cfe_combination.jinja2': 'Explanation Generator: produces final recommendation and alternative explanations.'
-  };
-
-  // Friendly titles for display (used as the card heading instead of raw filename)
-  const titles = {
-    'rec_base.jinja2': 'Recommender (Base Template)',
-    'rec_with_context.jinja2': 'Context-Aware Recommender',
-    'intent_classification.jinja2': 'Intent Classifier',
-    'rec_baseline.jinja2': 'Recommender — Baseline',
-    'cqs_variant1.jinja2': 'Clarifying Questions',
-    'cfe_combination.jinja2': 'Explanation Generator'
-  };
-
-  const grid = document.getElementById('prompts-grid');
-  if (!grid) return;
-
-  // Helper to create safe element IDs from filenames
-  const makeId = (name) => 'p_' + name.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '').toLowerCase();
-
-  // Fetch each file and render a card
-  for (const fileName of promptFiles) {
-    const url = `./static/prompts/${fileName}`;
-
-    // Create card skeleton
-    const card = document.createElement('div');
-    card.className = 'prompt-card';
-
-    const header = document.createElement('div');
-    header.className = 'prompt-header';
-
-    const titleWrap = document.createElement('div');
-    const title = document.createElement('div');
-    title.className = 'prompt-title';
-    // Use friendly title when available
-    title.textContent = titles[fileName] || fileName;
-    const meta = document.createElement('div');
-    meta.className = 'prompt-meta';
-    // Use the short description if available, otherwise a generic label
-    meta.textContent = descriptions[fileName] || 'Prompt template';
-    titleWrap.appendChild(title);
-    titleWrap.appendChild(meta);
-
-    const actions = document.createElement('div');
-    actions.className = 'prompt-actions';
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'button toggle-btn prompt-toggle';
-    toggleBtn.setAttribute('aria-expanded', 'false');
-    const idBase = makeId(fileName);
-    const wrapperId = idBase + '_wrapper';
-    toggleBtn.setAttribute('aria-controls', wrapperId);
-    toggleBtn.textContent = 'View';
-    actions.appendChild(toggleBtn);
-
-    header.appendChild(titleWrap);
-    header.appendChild(actions);
-    card.appendChild(header);
-
-    // Preview (short excerpt)
-    const preview = document.createElement('div');
-    preview.className = 'prompt-preview';
-    preview.textContent = 'Loading…';
-    card.appendChild(preview);
-
-    // Code wrapper (initially hidden)
-    const wrapper = document.createElement('div');
-    wrapper.className = 'prompt-code-wrapper';
-    wrapper.id = wrapperId;
-    wrapper.setAttribute('aria-hidden', 'true');
-
-    const pre = document.createElement('pre');
-    const codeId = idBase + '_code';
-    pre.className = 'prompt-code';
-    pre.id = codeId;
-    pre.setAttribute('tabindex', '-1');
-    pre.textContent = '';
-
-    wrapper.appendChild(pre);
-
-    const wrapperActions = document.createElement('div');
-    wrapperActions.className = 'prompt-actions';
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'button copy-btn';
-    copyBtn.setAttribute('data-target', codeId);
-    copyBtn.textContent = 'Copy';
-    wrapperActions.appendChild(copyBtn);
-    wrapper.appendChild(wrapperActions);
-
-    const status = document.createElement('div');
-    status.className = 'prompts-status';
-    status.setAttribute('aria-live', 'polite');
-    wrapper.appendChild(status);
-
-    card.appendChild(wrapper);
-
-    grid.appendChild(card);
-
-    // Fetch file content and populate preview + pre
-    try {
-      const resp = await fetch(url);
-      if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
-      const text = await resp.text();
-      // Preview: first 6 lines or first 400 chars
-      const lines = text.split(/\r?\n/).slice(0, 6).join('\n');
-      const previewText = lines.length > 0 ? lines : text.slice(0, 400);
-      preview.textContent = previewText + (text.length > previewText.length ? '\n…' : '');
-      pre.textContent = text;
-    } catch (err) {
-      preview.textContent = 'Failed to load prompt: ' + String(err);
-      pre.textContent = '';
-      status.textContent = 'Error loading file';
-      console.error('Error loading prompt', fileName, err);
-    }
-  }
-
-  // After building all cards, attach behaviour using event delegation
-  // Helper to update the grid when any cards are expanded
-  function updateGridExpandedState() {
-    const anyExpanded = grid.querySelectorAll('.prompt-code-wrapper.expanded').length > 0;
-    if (anyExpanded) grid.classList.add('has-expanded'); else grid.classList.remove('has-expanded');
-  }
-
-  // Toggle expand/collapse and copy handling
-  grid.addEventListener('click', function (e) {
-    const t = e.target;
-
-    // Toggle button
-    if (t.classList && t.classList.contains('prompt-toggle')) {
-      const btn = t;
-      const wrapper = document.getElementById(btn.getAttribute('aria-controls'));
-      const card = btn.closest('.prompt-card');
-      const preview = card.querySelector('.prompt-preview');
-      const codeEl = card.querySelector('.prompt-code');
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-
-      // Update aria and visuals
-      btn.setAttribute('aria-expanded', String(!expanded));
-      if (!expanded) {
-        if (preview) preview.classList.add('collapsed');
-        wrapper.classList.add('expanded');
-        wrapper.setAttribute('aria-hidden', 'false');
-        btn.textContent = 'Collapse';
-        if (codeEl) setTimeout(() => { codeEl.focus(); }, 120);
-      } else {
-        if (preview) preview.classList.remove('collapsed');
-        wrapper.classList.remove('expanded');
-        wrapper.setAttribute('aria-hidden', 'true');
-        btn.textContent = 'View';
-      }
-
-      updateGridExpandedState();
-      return;
-    }
-
-    // Copy button
-    if (t.classList && t.classList.contains('copy-btn')) {
-      const btn = t;
-      const targetId = btn.getAttribute('data-target');
-      const codeEl = document.getElementById(targetId);
-      if (!codeEl) return;
-      const text = codeEl.textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const statusEl = btn.closest('.prompt-card').querySelector('.prompts-status');
-        if (statusEl) {
-          statusEl.textContent = 'Copied to clipboard ✓';
-          setTimeout(() => { statusEl.textContent = ''; }, 2200);
-        }
-      }).catch((err) => {
-        console.error('Copy failed', err);
-        const statusEl = btn.closest('.prompt-card').querySelector('.prompts-status');
-        if (statusEl) {
-          statusEl.textContent = 'Copy failed';
-          setTimeout(() => { statusEl.textContent = ''; }, 2200);
-        }
+  /* ─── DOM helper ──────────────────────────────────────────────────────── */
+  function el(tag, attrs, ...children) {
+    const node = document.createElement(tag);
+    if (attrs) {
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'className') node.className = v;
+        else if (k === 'style' && typeof v === 'object') Object.assign(node.style, v);
+        else node.setAttribute(k, v);
       });
-      return;
     }
-  });
+    children.forEach((c) => {
+      if (typeof c === 'string') node.appendChild(document.createTextNode(c));
+      else if (c instanceof Node) node.appendChild(c);
+    });
+    return node;
+  }
 
-  // Keyboard handling: Escape to collapse when focus is in a .prompt-code
-  grid.addEventListener('keydown', function (e) {
-    const el = e.target;
-    if (e.key === 'Escape' && el.classList && el.classList.contains('prompt-code')) {
-      const wrapper = el.closest('.prompt-code-wrapper');
-      const card = wrapper.closest('.prompt-card');
-      const toggle = card.querySelector('.prompt-toggle');
-      const preview = card.querySelector('.prompt-preview');
+  /* ─── Card Builder ────────────────────────────────────────────────────── */
+  function buildCard(prompt) {
+    const idBase    = 'p_' + prompt.file.replace(/[^a-z0-9]+/gi, '_').toLowerCase();
+    const wrapperId = idBase + '_wrapper';
+    const codeId    = idBase + '_code';
 
-      wrapper.classList.remove('expanded');
+    /* ── Icon ── */
+    const iconEl = el('div', {
+      className: 'prompt-icon',
+      style: { background: prompt.accentBg, color: prompt.accent },
+      'aria-hidden': 'true',
+    });
+    iconEl.innerHTML = `<i class="fas ${prompt.icon}"></i>`;
+
+    /* ── Title + badge row ── */
+    const titleEl = el('div', { className: 'prompt-title' }, prompt.title);
+
+    const badgeEl = el('span', {
+      className: 'prompt-badge',
+      style: { background: prompt.accentBg, color: prompt.accent },
+    }, prompt.category.charAt(0).toUpperCase() + prompt.category.slice(1));
+
+    const titleRow = el('div', { className: 'prompt-title-row' }, titleEl, badgeEl);
+
+    /* ── Description ── */
+    const metaEl = el('div', { className: 'prompt-meta' }, prompt.description);
+
+    const titleWrap = el('div', { className: 'prompt-title-wrap' }, titleRow, metaEl);
+
+    /* ── Toggle button ── */
+    const toggleBtn = el('button', {
+      className:       'prompt-toggle-btn',
+      'aria-expanded': 'false',
+      'aria-controls': wrapperId,
+    });
+    toggleBtn.innerHTML =
+      '<span class="toggle-label">View</span><i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>';
+
+    /* ── Header ── */
+    const header = el('div', { className: 'prompt-card-header' }, iconEl, titleWrap, toggleBtn);
+
+    /* ── Preview (first 7 lines) ── */
+    const preview = el('pre', { className: 'prompt-preview' }, 'Loading…');
+
+    /* ── Code block ── */
+    const pre = el('pre', { className: 'prompt-code', id: codeId, tabindex: '-1' });
+
+    /* ── Copy button + status ── */
+    const copyBtn = el('button', {
+      className:     'prompt-copy-btn',
+      'data-target': codeId,
+    });
+    copyBtn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i> Copy';
+
+    const copyStatus = el('span', { className: 'prompt-copy-status', 'aria-live': 'polite' });
+    const wrapperActions = el('div', { className: 'prompt-wrapper-actions' }, copyBtn, copyStatus);
+
+    /* ── Inner div: SINGLE grid child so grid-template-rows animation works ── */
+    const inner = el('div', { className: 'prompt-code-inner' }, pre, wrapperActions);
+
+    /* ── Collapsible wrapper ── */
+    const wrapper = el('div', {
+      className:     'prompt-code-wrapper',
+      id:            wrapperId,
+      'aria-hidden': 'true',
+    }, inner);
+
+    /* ── Card (top-border accent via CSS var) ── */
+    const card = el('div', {
+      className:       'prompt-card',
+      'data-category': prompt.category,
+      'data-file':     prompt.file,
+      style:           { '--prompt-accent': prompt.accent },
+    }, header, preview, wrapper);
+
+    return { card, preview, pre, toggleBtn, wrapper, copyBtn, copyStatus };
+  }
+
+  /* ─── Toggle ──────────────────────────────────────────────────────────── */
+  function handleToggle(btn, wrapper, preview) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    const label = btn.querySelector('.toggle-label');
+    const icon  = btn.querySelector('.toggle-icon');
+    if (!expanded) {
+      preview.classList.add('is-collapsed');
+      wrapper.classList.add('is-expanded');
+      wrapper.setAttribute('aria-hidden', 'false');
+      if (label) label.textContent = 'Collapse';
+      if (icon)  icon.style.transform = 'rotate(180deg)';
+    } else {
+      preview.classList.remove('is-collapsed');
+      wrapper.classList.remove('is-expanded');
       wrapper.setAttribute('aria-hidden', 'true');
-      if (preview) preview.classList.remove('collapsed');
-      if (toggle) {
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.textContent = 'View';
+      if (label) label.textContent = 'View';
+      if (icon)  icon.style.transform = '';
+    }
+  }
+
+  /* ─── Copy ────────────────────────────────────────────────────────────── */
+  function handleCopy(btn, statusEl) {
+    const codeEl = document.getElementById(btn.dataset.target);
+    if (!codeEl) return;
+    navigator.clipboard.writeText(codeEl.textContent).then(() => {
+      btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Copied!';
+      if (statusEl) statusEl.textContent = '✓ Copied';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i> Copy';
+        if (statusEl) statusEl.textContent = '';
+      }, 2000);
+    }).catch(() => {
+      if (statusEl) {
+        statusEl.textContent = 'Copy failed';
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+    });
+  }
+
+  /* ─── Filter ──────────────────────────────────────────────────────────── */
+  function applyFilter(grid, filter) {
+    grid.querySelectorAll('.prompt-card').forEach((card) => {
+      const show = filter === 'all' || card.dataset.category === filter;
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  /* ─── Init ────────────────────────────────────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', async function () {
+    const grid = document.getElementById('prompts-grid');
+    if (!grid) return;
+
+    /* Build all card skeletons first */
+    const cardRefs = PROMPTS.map((prompt) => {
+      const refs = buildCard(prompt);
+      grid.appendChild(refs.card);
+      return { prompt, ...refs };
+    });
+
+    /* Fetch content in parallel */
+    await Promise.all(cardRefs.map(async ({ prompt, preview, pre }) => {
+      try {
+        const resp = await fetch(`./static/prompts/${prompt.file}`);
+        if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
+        const text  = await resp.text();
+        const lines = text.split(/\r?\n/);
+        preview.textContent = lines.slice(0, 7).join('\n') + (lines.length > 7 ? '\n…' : '');
+        pre.textContent     = text;
+      } catch (err) {
+        preview.textContent = 'Failed to load: ' + String(err);
+        console.error('Prompt load error:', prompt.file, err);
+      }
+    }));
+
+    /* Wire events */
+    cardRefs.forEach(({ toggleBtn, wrapper, preview, copyBtn, copyStatus }) => {
+      toggleBtn.addEventListener('click', () => handleToggle(toggleBtn, wrapper, preview));
+      copyBtn.addEventListener('click',   () => handleCopy(copyBtn, copyStatus));
+    });
+
+    /* Escape to collapse */
+    grid.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const codeEl = e.target.closest('.prompt-code');
+      if (!codeEl) return;
+      const wrapper  = codeEl.closest('.prompt-code-wrapper');
+      const card     = wrapper && wrapper.closest('.prompt-card');
+      const toggle   = card && card.querySelector('.prompt-toggle-btn');
+      const preview  = card && card.querySelector('.prompt-preview');
+      if (wrapper && toggle && preview) {
+        handleToggle(toggle, wrapper, preview);
         toggle.focus();
       }
+    });
 
-      updateGridExpandedState();
-    }
+    /* Filter tabs */
+    document.querySelectorAll('.prompt-filter-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.prompt-filter-btn').forEach((b) => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        applyFilter(grid, btn.dataset.filter);
+      });
+    });
   });
 
-});
-
+})();
