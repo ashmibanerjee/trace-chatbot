@@ -31,6 +31,7 @@
         <li><a href="#abstract">Abstract</a></li>
         <li><a href="#demo">Demo & Video</a></li>
         <li><a href="#system">System Design</a></li>
+        <li><a href="#prompts">Prompts</a></li>
         <li><a href="#acknowledgment">Acknowledgment</a></li>
         <li><a href="#bibtex">BibTeX</a></li>
       </ul>
@@ -74,7 +75,7 @@
           <i class="fa-brands fa-youtube btn-icon" aria-hidden="true"></i>
           <span>Demo Video</span>
         </a>
-        <a class="btn btn--dark" href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--dark" href="https://github.com/ashmibanerjee/trace-crs-chatbot" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-github btn-icon" aria-hidden="true"></i>
           <span>Code</span>
         </a>
@@ -190,6 +191,40 @@
     </div>
   </section>
 
+  <!-- PROMPTS -->
+  <section class="section section--alt" id="prompts">
+    <div class="container">
+      <div class="section-divider">
+        <h2 class="section-title">Agent Prompts</h2>
+      </div>
+      <p class="text-center" style="max-width: 800px; margin-inline: auto; color: var(--color-text-light); margin-bottom: var(--space-xl);">
+        TRACE uses a set of Jinja2 prompt templates, one per specialized agent, to govern each stage of the conversational pipeline — from clarifying questions to sustainability-aware recommendations and counterfactual explanations.
+      </p>
+
+      <!-- Prompt filter tabs -->
+      <div class="prompt-filters" role="tablist" aria-label="Filter prompts by category">
+        <button class="prompt-filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="prompt-filter-btn" data-filter="recommender" role="tab" aria-selected="false">Recommender</button>
+        <button class="prompt-filter-btn" data-filter="clarification" role="tab" aria-selected="false">Clarification</button>
+        <button class="prompt-filter-btn" data-filter="explanation" role="tab" aria-selected="false">Explanation</button>
+        <button class="prompt-filter-btn" data-filter="intent" role="tab" aria-selected="false">Intent</button>
+      </div>
+
+      <!-- Prompt cards grid -->
+      <div id="prompts-grid" class="prompts-grid" aria-live="polite">
+        <!-- Cards injected by prompts.js -->
+      </div>
+
+      <!-- Link to full source -->
+      <div style="text-align: center; margin-top: var(--space-xl);">
+        <a class="btn btn--dark" href="https://github.com/ashmibanerjee/trace-crs-chatbot/tree/main/backend/prompts" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github btn-icon" aria-hidden="true"></i>
+          <span>View All Prompts on GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ACKNOWLEDGMENT -->
   <section class="section section--alt" id="acknowledgment">
     <div class="container">
@@ -230,7 +265,7 @@
         <a href="https://arxiv.org/abs/2604.14223" target="_blank" rel="noopener noreferrer" aria-label="arXiv paper">
           <i class="ai ai-arxiv" aria-hidden="true"></i>
         </a>
-        <a href="https://github.com/ashmibanerjee/crs-chatbot" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+        <a href="https://github.com/ashmibanerjee/trace-crs-chatbot" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
           <i class="fab fa-github" aria-hidden="true"></i>
         </a>
         <a href="https://ashmibanerjee.com" target="_blank" rel="noopener noreferrer" aria-label="Author website">
@@ -250,5 +285,6 @@
   </button>
 
   <script src="static/js/main.js" defer></script>
+  <script src="static/js/prompts.js" defer></script>
 </body>
 </html>
